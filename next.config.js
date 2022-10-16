@@ -5,6 +5,7 @@ const optimizedImages = require('next-optimized-images');
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  basePath: '/neverendy-home',
   images: {
     unoptimized: true
   }
