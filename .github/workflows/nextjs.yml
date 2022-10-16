@@ -90,15 +90,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Trigger gh-page Action
+      - name: Deploy to GitHub Pages
         id: deployment
-        run: |
-              git init
-              git config --global user.name ${{github.triggering_actor}}
-              git status
-              git remote add origin https://${{secrets.GIT_TOKEN}}@github.com/${{github.repository}}.git
-              git checkout -b gh-pages
-              git add --all
-              git commit -m "Deploy Next Site to gh-pages" 
-              git push origin gh-pages -f
-              echo 🤘 deploy gh-pages complete.
+        uses: actions/deploy-pages@v1
