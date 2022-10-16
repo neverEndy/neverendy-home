@@ -14,7 +14,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to Neverendy's Home
+          {`Welcome to Neverendy's Home`}
         </h1>
 
         <div className={styles.grid}>
