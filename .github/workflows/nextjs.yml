@@ -92,4 +92,15 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        run: |
+              npm run build
+              cd ./out
+              git init
+              git config --global user.name ${{github.triggering_actor}}
+              git status
+              git remote add origin https://${{secrets.GIT_TOKEN}}@github.com/${{github.repository}}.git
+              git checkout -b gh-pages
+              git add --all
+              git commit -m "Deploy Next Site to gh-pages" 
+              git push origin gh-pages -f
+              echo 🤘 deploy gh-pages complete.
