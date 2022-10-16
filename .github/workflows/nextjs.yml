@@ -93,7 +93,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         run: |
-              npm run build
               cd ./out
               git init
               git config --global user.name ${{github.triggering_actor}}
