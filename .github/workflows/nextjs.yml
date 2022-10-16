@@ -90,10 +90,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Trigger gh-page Action
         id: deployment
         run: |
-              cd ./out
               git init
               git config --global user.name ${{github.triggering_actor}}
               git status
