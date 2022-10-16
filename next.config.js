@@ -4,12 +4,14 @@ const optimizedImages = require('next-optimized-images');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  swcMinify: true
 }
-module.exports = withPlugins([
+
+module.exports = withPlugins(
   [
-    optimizedImages,
-    nextConfig
-  ]
-  // your other plugins here
-]);
+    optimizedImages
+  ],
+  {
+    ...nextConfig
+  }
+);
