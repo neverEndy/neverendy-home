@@ -1,19 +1,20 @@
 import React from 'react'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import { promises as fs } from 'fs'
-import path from 'path'
-import blogList from '../../../public/blog/posts.json'
+import blogMap from '../../../public/blog/map.json'
 import 'github-markdown-css'
+import { map } from 'lodash'
 
 const markdown = require('markdown').markdown
 
-type IPost = typeof blogList[0]
+type IPost = typeof blogMap['blg-title1'] & {
+  content: string
+}
 
 const Post = ({
   id,
   title,
   subtitle,
-  detail,
+  content,
   author
 }: IPost) => {
   return (
@@ -23,14 +24,14 @@ const Post = ({
         <h1>{title}</h1>
         <h5>{subtitle}</h5>
       </div>
-      <section dangerouslySetInnerHTML={{ __html: detail }}></section>
+      <section dangerouslySetInnerHTML={{ __html: content }}></section>
     </article>
   )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: blogList.map(blog => ({ params: { id: blog.id } })),
+    paths: map(blogMap, blog => ({ params: { id: blog.id } })),
     fallback: false, // can also be true or 'blocking'
   }
 }
@@ -42,15 +43,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
       notFound: true
     }
   }
-  const post = blogList.filter(blog => blog.id === id)
-  const resp = await fs.readFile(path.resolve('./', `public/blog/markdowns/${id}.md`))
-  // const resp = await fetch(`./blog/markdowns/${id}`)
-  const respText = await resp.toString()
+  const resp = await fetch(`http://localhost:3000/neverendy-home/api/blogs/${id}`)
+  const respJson = await resp.json()
   
   return {
     props: {
-      ...post,
-      detail: markdown.toHTML(respText)
+      ...respJson,
+      content: markdown.toHTML(respJson.content)
+
     },
   }
 }

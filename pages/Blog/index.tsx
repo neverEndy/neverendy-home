@@ -1,11 +1,12 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
-import blogList from '../../public/blog/posts.json'
+import blogMap from '../../public/blog/map.json'
 import style from './index.module.scss'
 import NavLink from '../../components/Button/NavLink'
+import { map } from 'lodash'
 
 interface IBlog {
-  posts: typeof blogList
+  posts: typeof blogMap
 }
 
 const Blog = ({ posts }: IBlog) => {
@@ -13,7 +14,7 @@ const Blog = ({ posts }: IBlog) => {
     <div className={style.Root}>
       <div className={style.ArticlaContainer}>
         {
-          posts.map((post, index) => (
+          map(blogMap, (post, index) => (
             <article className={style.Artical} key={index}>
               <NavLink href={`/Blog/${post.id}`}>
                 <span>
@@ -32,7 +33,7 @@ const Blog = ({ posts }: IBlog) => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   return {
-    props: { posts: blogList },
+    props: { posts: blogMap },
   }
 }
 
