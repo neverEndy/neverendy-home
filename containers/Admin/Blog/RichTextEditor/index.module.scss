@@ -1,0 +1,17 @@
+.Root {
+  @apply flex flex-col m-5;
+}
+
+.Toolbar {
+  @apply flex gap-2;
+}
+
+.MarkdownInput {
+ @apply w-full min-h-[500px] resize-none outline-none p-3 m-auto;
+ min-width: 200px;
+ max-width: 980px;
+}
+
+.MarkdownPreview {
+  @apply w-full;
+}

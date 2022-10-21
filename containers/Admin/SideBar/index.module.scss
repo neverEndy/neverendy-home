@@ -2,7 +2,8 @@
   @apply
     flex flex-col gap-3
     h-full
-    py-3 px-2;
+    py-3 px-2
+    border-r border-gray-700;
   min-width: 150px;
   max-width: 250px;
 }

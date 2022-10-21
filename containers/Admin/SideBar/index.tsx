@@ -5,12 +5,8 @@ import style from './index.module.scss'
 const SideBar = () => {
   return (
     <aside className={style.Root}>
-      <span className={style.BarItem}>
-        <Link href='/Admin'>Admin</Link>
-      </span>
-      <span className={style.BarItem}>
-        <Link href='/Admin/MyBlog'>My Blog</Link>
-      </span>
+      <Link href='/Admin'><a className={style.BarItem}>Admin</a></Link>
+      <Link href='/Admin/MyBlog'><a className={style.BarItem}>My Blog</a></Link>
     </aside>
   )
 }

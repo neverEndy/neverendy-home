@@ -16,6 +16,24 @@ main {
   @apply flex-1;
 }
 
+.editor-toolbar, .editor-toolbar.fullscreen {
+  background: black !important;
+  color: #9f9f9f;
+}
+
+.EasyMDEContainer .CodeMirror, .EasyMDEContainer .CodeMirror-fullscreen {
+  background: black !important;
+  color: currentColor;
+}
+
+.editor-preview {
+  background: black !important;
+}
+
+.CodeMirror-cursor {
+  border-left: 1px solid #7e7e7e !important;
+}
+
 .markdown-body {
   margin: auto !important;
   box-sizing: border-box;

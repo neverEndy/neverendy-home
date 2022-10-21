@@ -1,5 +1,5 @@
 .Root {
-  @apply p-5;
+  @apply p-5 max-w-3xl m-auto;
 }
 
 .List {
@@ -7,12 +7,25 @@
 }
 
 .Article {
-  @apply grid grid-cols-4;
+  @apply flex flex-col border-b border-gray-700 py-4;
+}
+
+.ArticleHeader {
+  @apply flex justify-between items-center gap-3;
+}
+
+.HeaderTitle {
+  @apply text-lg text-sky-500 font-bold cursor-pointer;
+}
+
+.HeaderActions {
+
+}
+
+.ArticleInfo {
+  @apply grid grid-cols-3;
 }
 
 .Actions {
   @apply py-3
-}
-
-.ArticleActions {
 }
