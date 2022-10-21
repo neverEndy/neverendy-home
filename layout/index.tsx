@@ -1,5 +1,4 @@
 import React from 'react'
-import style from './index.module.scss'
 import Navbar from './Navbar'
 
 interface ILayout {
@@ -10,12 +9,12 @@ const Layout = ({
   children
 }: ILayout) => {
   return (
-    <div className={style.Container}>
+    <>
       <Navbar />
       {
         children
       }
-    </div>
+    </>
   )
 }
 

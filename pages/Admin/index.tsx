@@ -1,11 +1,12 @@
 import React from 'react'
+import { withSideBar } from '../../containers/Admin/SideBar'
 
 const Admin = () => {
   return (
     <div>
-      6666
+      111110101010
     </div>
   )
 }
 
-export default Admin
+export default withSideBar(Admin)

@@ -1,0 +1,18 @@
+.Root {
+  @apply p-5;
+}
+
+.List {
+ @apply flex flex-col my-8 gap-3;
+}
+
+.Article {
+  @apply grid grid-cols-4;
+}
+
+.Actions {
+  @apply py-3
+}
+
+.ArticleActions {
+}

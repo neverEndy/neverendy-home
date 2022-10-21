@@ -18,14 +18,15 @@ const Post = ({
   author
 }: IPost) => {
   return (
-    
-    <article className="markdown-body">
-      <div>
-        <h1>{title}</h1>
-        <h5>{subtitle}</h5>
-      </div>
-      <section dangerouslySetInnerHTML={{ __html: content }}></section>
-    </article>
+    <main>
+      <article className="markdown-body">
+        <div>
+          <h1>{title}</h1>
+          <h5>{subtitle}</h5>
+        </div>
+        <section dangerouslySetInnerHTML={{ __html: content }}></section>
+      </article>
+    </main>
   )
 }
 

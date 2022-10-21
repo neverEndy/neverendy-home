@@ -4,9 +4,9 @@ import style from './index.module.scss'
 
 const Navbar = () => {
   return (
-    <div className={style.Root}>
+    <header className={style.Root}>
       <NavLink href='/Blog'>Blog</NavLink>
-    </div>
+    </header>
   )
 }
 

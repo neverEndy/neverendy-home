@@ -11,7 +11,7 @@ interface IBlog {
 
 const Blog = ({ posts }: IBlog) => {
   return (
-    <div className={style.Root}>
+    <main className={style.Root}>
       <div className={style.ArticlaContainer}>
         {
           map(blogMap, (post, index) => (
@@ -27,7 +27,7 @@ const Blog = ({ posts }: IBlog) => {
           ))
         }
       </div>
-    </div>
+    </main>
   )
 }
 
