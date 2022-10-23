@@ -50,7 +50,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       ...respJson,
-      content: markdown.toHTML(respJson.content)
+      content: markdown.toHTML(respJson.article.content)
 
     },
   }

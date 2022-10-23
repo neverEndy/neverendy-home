@@ -1,24 +1,18 @@
 import { RequestHandler } from "./utils"
 import { promises as fs } from 'fs'
 import { uuid } from "../utils"
+import Blogs, { BlogModel } from "../dao/Blogs"
+import { ArticleModel } from "../dao/Articles"
 
 export const getAllBlogs: RequestHandler = async (req, res) => {
-  const fileNames = await fs.readdir('public/blog/markdowns/')
-  res.status(200).json({
-    length: fileNames.length,
-    datas: fileNames
-  })
+  const blogs = await Blogs.getAll()
+  res.status(200).json(blogs)
 }
 
 export const getBlogById: RequestHandler = async (req, res) => {
   const id = String(req.query.id)
-  const mapbuffer = await fs.readFile('public/blog/map.json')
-  const blogMap = JSON.parse(mapbuffer.toString())
-  const buffer = await fs.readFile(`public/blog/markdowns/${id}.md`)
-  res.status(200).json({
-    ...blogMap[id],
-    content: await buffer.toString()
-  })
+  const blog = await Blogs.getById(id)
+  res.status(200).json(blog)
 }
 
 export const createBlog: RequestHandler = async (req, res) => {
@@ -32,10 +26,8 @@ export const createBlog: RequestHandler = async (req, res) => {
   if (!(reqestBlog.title || reqestBlog.content)) {
     res.status(400).json({ msg: 'title is required' })
   }
-  const buffer = await fs.readFile('public/blog/map.json')
-  const blogMap = JSON.parse(buffer.toString())
   const id = uuid()
-  const newBlog = {
+  const newBlog: BlogModel = {
     id,
     title: reqestBlog.title,
     subtitle: reqestBlog.subtitle,
@@ -44,7 +36,10 @@ export const createBlog: RequestHandler = async (req, res) => {
     createdDate: Date.now(),
     editDate: Date.now(),
   }
-  await fs.writeFile(`public/blog/map.json`, JSON.stringify({ ...blogMap, [id]: newBlog }))
-  await fs.writeFile(`public/blog/markdowns/${id}.md`, reqestBlog.content)
+  const newArticle: ArticleModel = {
+    id,
+    content: reqestBlog.content
+  }
+  Blogs.create(newBlog, newArticle)
   res.status(200).json(newBlog)
 }
