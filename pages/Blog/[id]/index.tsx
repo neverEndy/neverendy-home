@@ -44,7 +44,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       notFound: true
     }
   }
-  const resp = await fetch(`http://localhost:3000/neverendy-home/api/blogs/${id}`)
+  const resp = await fetch(`http://127.0.0.1:3000/neverendy-home/api/blogs/${id}`)
   const respJson = await resp.json()
   
   return {
