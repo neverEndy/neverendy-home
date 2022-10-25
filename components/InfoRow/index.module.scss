@@ -1,0 +1,23 @@
+.Root {
+  @apply flex flex-col border-b border-gray-700 py-4;
+}
+
+.Header {
+  @apply flex justify-between items-center gap-3;
+}
+
+.HeaderTitle {
+  @apply text-lg text-sky-500 font-bold cursor-pointer;
+}
+
+.HeaderActions {
+
+}
+
+.Description {
+  @apply grid grid-cols-3 py-3 text-gray-300;
+}
+
+.Footer {
+  @apply flex gap-5 text-gray-400 text-sm;
+}

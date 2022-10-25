@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import TextField from '../../../../components/TextField'
-import { CreateBlogOption } from '../../../../libs/controller/blogs'
+import TextField from '../../../components/TextField'
+import { CreateBlogOption } from '../../../libs/controller/blogs'
 import RichTextEditor from '../RichText/Editor'
 import style from './index.module.scss'
 
@@ -26,7 +26,7 @@ const BlogCreator = () => {
       title,
       subtitle,
       author,
-      tags: JSON.stringify(tags),
+      tags: tags.toString(),
       content: markdown
     }
     console.log(options)

@@ -4,28 +4,19 @@ import blogMap from '../../public/blog/map.json'
 import style from './index.module.scss'
 import NavLink from '../../components/Button/NavLink'
 import { map } from 'lodash'
+import BlogList from '../../containers/Blog/BlogList'
+import { BlogModel } from '../../libs/dao/Blogs'
 
 interface IBlog {
-  posts: typeof blogMap
+  blogDict: { [k: string]: BlogModel }
 }
 
-const Blog = ({ posts }: IBlog) => {
+const Blog = ({ blogDict }: IBlog) => {
+  const blogs = Object.values(blogDict).map(blog => ({ ...blog, disabledActions: true }))
   return (
     <main className={style.Root}>
       <div className={style.ArticlaContainer}>
-        {
-          map(blogMap, (post, index) => (
-            <article className={style.Artical} key={index}>
-              <NavLink href={`/Blog/${post.id}`}>
-                <span>
-                  <h3>{post.title}</h3>
-                  <p>{post.subtitle}</p>
-                </span>
-              </NavLink>
-              <p>{post.author}</p>
-            </article>
-          ))
-        }
+        <BlogList values={blogs}/>
       </div>
     </main>
   )
@@ -33,7 +24,7 @@ const Blog = ({ posts }: IBlog) => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   return {
-    props: { posts: blogMap },
+    props: { blogDict: blogMap },
   }
 }
 

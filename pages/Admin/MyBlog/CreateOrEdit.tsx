@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import useBlogById from '../../../hooks/api/useBlogById'
-import BlogCreator from '../../../containers/Admin/Blog/BlogCreator'
-import BlogEditor from '../../../containers/Admin/Blog/BlogEditor'
+import BlogCreator from '../../../containers/Blog/BlogCreator'
+import BlogEditor from '../../../containers/Blog/BlogEditor'
 
 const CreateOrEdit = () => {
   const router = useRouter()
