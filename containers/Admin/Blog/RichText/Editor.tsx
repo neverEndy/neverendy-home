@@ -1,15 +1,20 @@
 import React, { useCallback, useState } from 'react'
-import style from './index.module.scss'
+import style from './Editor.module.scss'
 import 'github-markdown-css'
 import classNames from 'classnames'
+import RichTextViewer from './Viewer'
 
 const markdown = require('markdown').markdown
 
-const RichTextEditor = () => {
-  const [value, setValue] = useState('')
-  const onChange = useCallback((value: string) => {
-    setValue(value)
-  }, [])
+export interface IRichTextEditorProps {
+  value: string
+  onChange: (value: string) => void
+}
+
+const RichTextEditor = ({
+  value,
+  onChange
+}: IRichTextEditorProps) => {
   return (
     <div className={style.Root}>
       <div  className={style.Toolbar}></div>
@@ -17,7 +22,7 @@ const RichTextEditor = () => {
         className={style.MarkdownInput}
         value={value}
         onChange={(e) => onChange(e.target.value)} />
-      <div className={classNames(style.MarkdownPreview, 'markdown-body')} dangerouslySetInnerHTML={{ __html: markdown.toHTML(value) }}></div>
+      <RichTextViewer value={value}/>
     </div>
   )
 }

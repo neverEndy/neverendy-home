@@ -34,13 +34,17 @@ class Blogs implements DAOBehavior<BlogModel> {
   }
 
   async create (model: BlogModel, article: ArticleModel) {
-    const buffer = await fs.readFile('public/blog/map.json')
-    const blogMap = JSON.parse(buffer.toString())
-    await fs.writeFile(`public/blog/map.json`, JSON.stringify({ ...blogMap, [model.id]: model }))
-    Articles.create(article)
+    const blogMap = await this.getMap()
+    const text = JSON.stringify({ ...blogMap, [model.id]: model })
+    await fs.writeFile(`public/blog/map.json`, text)
+    await Articles.create(article)
   }
 
-  async delete () {}
+  async delete (id: string) {
+    const map = await this.getMap()
+    delete map[id]
+    await fs.writeFile(`public/blog/map.json`, JSON.stringify(map))
+  }
   async update () {}
 }
 

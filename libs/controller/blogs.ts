@@ -1,6 +1,6 @@
 import { uuid } from "../utils"
 import Blogs, { BlogModel } from "../dao/Blogs"
-import { ArticleModel } from "../dao/Articles"
+import Articles, { ArticleModel } from "../dao/Articles"
 
 export const getAllBlogs = async () => {
   const blogs = await Blogs.getAll()
@@ -15,7 +15,6 @@ export const getBlogById = async (id: string) => {
 export type CreateBlogOption = Omit<BlogModel, 'id' | 'createdDate' | 'editDate'> & Omit<ArticleModel, 'id'>
 
 export const createBlog = async (obj: CreateBlogOption) => {
-
   const id = uuid()
   const newBlog: BlogModel = {
     id,
@@ -32,4 +31,10 @@ export const createBlog = async (obj: CreateBlogOption) => {
   }
   Blogs.create(newBlog, newArticle)
   return newBlog
+}
+
+export const deleteBlog = async (id: string) => {
+  await Blogs.delete(id)
+  await Articles.delete(id)
+  return { id }
 }

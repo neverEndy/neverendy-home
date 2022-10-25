@@ -9,8 +9,8 @@ export type MethodHandler = {
   put?: RequestHandler
 }
 
-export const requestMethodHandler = (req: NextApiRequest, res: NextApiResponse) => {
-  return (handler: MethodHandler) => {
+export const requestMethodHandler = (handler: MethodHandler) => {
+  return (req: NextApiRequest, res: NextApiResponse) => {
     switch (req.method) {
       case 'GET':
         if (handler.get) {

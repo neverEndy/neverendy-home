@@ -1,0 +1,11 @@
+.Root {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  gap: 3px;
+
+  .Label {
+    margin-left: 15px;
+    margin-top: 10px;
+  }
+}

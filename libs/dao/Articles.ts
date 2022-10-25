@@ -26,7 +26,10 @@ class Articles implements DAOBehavior<ArticleModel>{
     await fs.writeFile(`public/blog/markdowns/${model.id}.md`, model.content)
   }
 
-  async delete () {}
+  async delete (id: string) {
+    await fs.unlink(`public/blog/markdowns/${id}.md`)
+  }
+
   async update () {}
 }
 
