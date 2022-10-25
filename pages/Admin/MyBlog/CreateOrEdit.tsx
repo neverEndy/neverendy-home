@@ -18,7 +18,7 @@ const CreateOrEdit = () => {
     } else if (isAllowEdit && !!blog) {
       setLoading(false)
     }
-  }, [type, id, blog])
+  }, [isAllowCreate, isAllowEdit])
 
   if (loading) {
     return <span>loading...</span>

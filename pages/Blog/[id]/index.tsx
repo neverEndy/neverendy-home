@@ -3,6 +3,7 @@ import { GetStaticProps, GetStaticPaths } from 'next'
 import blogMap from '../../../public/blog/map.json'
 import 'github-markdown-css'
 import { map } from 'lodash'
+import { getBlogById } from '../../../libs/controller/blogs'
 
 const markdown = require('markdown').markdown
 
@@ -44,15 +45,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
       notFound: true
     }
   }
-  const resp = await fetch(`http://127.0.0.1:3000/neverendy-home/api/blogs/${id}`)
-  const respJson = await resp.json()
+  const respJson = await getBlogById(String(id))
   
   return {
     props: {
       ...respJson,
       content: markdown.toHTML(respJson.article.content)
 
-    },
+    }
   }
 }
 

@@ -1,45 +1,35 @@
-import { RequestHandler } from "./utils"
-import { promises as fs } from 'fs'
 import { uuid } from "../utils"
 import Blogs, { BlogModel } from "../dao/Blogs"
 import { ArticleModel } from "../dao/Articles"
 
-export const getAllBlogs: RequestHandler = async (req, res) => {
+export const getAllBlogs = async () => {
   const blogs = await Blogs.getAll()
-  res.status(200).json(blogs)
+  return blogs
 }
 
-export const getBlogById: RequestHandler = async (req, res) => {
-  const id = String(req.query.id)
+export const getBlogById = async (id: string) => {
   const blog = await Blogs.getById(id)
-  res.status(200).json(blog)
+  return blog
 }
 
-export const createBlog: RequestHandler = async (req, res) => {
-  const reqestBlog = {
-    title: req.body.title,
-    subtitle: req.body.subtitle || null,
-    author: req.body.author || null,
-    tags: req.body.tags || [],
-    content: req.body.content
-  }
-  if (!(reqestBlog.title || reqestBlog.content)) {
-    res.status(400).json({ msg: 'title is required' })
-  }
+export type CreateBlogOption = Omit<BlogModel, 'id' | 'createdDate' | 'editDate'> & Omit<ArticleModel, 'id'>
+
+export const createBlog = async (obj: CreateBlogOption) => {
+
   const id = uuid()
   const newBlog: BlogModel = {
     id,
-    title: reqestBlog.title,
-    subtitle: reqestBlog.subtitle,
-    author: reqestBlog.author,
-    tags: reqestBlog.tags,
+    title: obj.title,
+    subtitle: obj.subtitle,
+    author: obj.author,
+    tags: obj.tags,
     createdDate: Date.now(),
     editDate: Date.now(),
   }
   const newArticle: ArticleModel = {
     id,
-    content: reqestBlog.content
+    content: obj.content
   }
   Blogs.create(newBlog, newArticle)
-  res.status(200).json(newBlog)
+  return newBlog
 }
