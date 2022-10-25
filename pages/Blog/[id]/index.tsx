@@ -4,12 +4,12 @@ import blogMap from '../../../public/blog/map.json'
 import 'github-markdown-css'
 import { map } from 'lodash'
 import { getBlogById } from '../../../libs/controller/blogs'
+import { BlogModel } from '../../../libs/dao/Blogs'
+import { ArticleModel } from '../../../libs/dao/Articles'
 
 const markdown = require('markdown').markdown
 
-type IPost = typeof blogMap['blg-title1'] & {
-  content: string
-}
+type IPost = BlogModel & ArticleModel
 
 const Post = ({
   id,
