@@ -2,8 +2,6 @@ import React from 'react'
 import { GetStaticProps } from 'next'
 import blogMap from '../../public/blog/map.json'
 import style from './index.module.scss'
-import NavLink from '../../components/Button/NavLink'
-import { map } from 'lodash'
 import BlogList from '../../containers/Blog/BlogList'
 import { BlogModel } from '../../libs/dao/Blogs'
 
