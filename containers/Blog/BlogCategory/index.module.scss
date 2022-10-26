@@ -3,11 +3,32 @@
 }
 
 .Folder {
-  @apply ml-5 mb-2;
+  @apply mb-2  max-h-fit;
+  overflow: initial;
+}
+
+.FolderContent {
+  @apply ml-5 max-h-[1000px] transition-all duration-300;
+  &.FolderClose {
+    @apply max-h-0 overflow-hidden;
+  }
 }
 
 .FolderItem {
-  @apply -ml-5 text-xl;
+  @apply text-xl cursor-pointer flex items-center;
+  @mixin decorator {
+    @apply text-sm mr-2;
+  }
+  &.FolderItemClose {
+    &::before {
+      @include decorator;
+      content: '>'
+    }
+  }
+  &::before {
+    @include decorator;
+    content: '⋁'
+  }
 }
 
 .Blog {

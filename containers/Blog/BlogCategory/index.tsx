@@ -1,53 +1,72 @@
+import classNames from 'classnames'
 import { map } from 'lodash'
+import Link from 'next/link'
 import React from 'react'
+import { useState } from 'react'
 import useBlogCategoryHierarchy, { BlogHierarchy, BLOG_HIERARCHY_KEY } from '../../../hooks/useBlogCategoryHierarchy'
 import { BlogModel } from '../../../libs/dao/Blogs'
 import style from './index.module.scss'
 
 export interface IBlogCategoryProps {
   blogs: BlogModel[]
+  className?: string
 }
 
 export interface IHierarchyViewProps {
   hierarchy: BlogHierarchy
+  rootTitle: string
+  className?: string
+  onClick?: () => void
 }
 
 const HierarchyView = ({
-  hierarchy
+  hierarchy,
+  rootTitle,
+  className = '',
+  onClick = () => null,
+  ...rest
 }: IHierarchyViewProps) => {
+  const [open, setOpen] = useState(true)
   const isFolder = (key: string) => new RegExp(BLOG_HIERARCHY_KEY.Folder).test(key)
   const isBlog = (key: string) => new RegExp(BLOG_HIERARCHY_KEY.Blog).test(key)
   const renderChild = (key: string, value: BlogHierarchy | BlogModel ) => {
     if (isFolder(key)) {
       return (
-        <ul key={key} className={style.Folder}>
-          <li className={style.FolderItem}>{key.replace(BLOG_HIERARCHY_KEY.Folder, '')}</li>
-          <ul className={style.Folder}><HierarchyView hierarchy={value as BlogHierarchy}/></ul>
-        </ul>
+          <React.Fragment key={key} >
+            {/* <li className={style.FolderItem} onClick={() => setOpen(!open)}>{key.replace(BLOG_HIERARCHY_KEY.Folder, '')}</li> */}
+            <HierarchyView
+              className={classNames({ [style.FolderClose]: !open })}
+              rootTitle={key.replace(BLOG_HIERARCHY_KEY.Folder, '')}
+              hierarchy={value as BlogHierarchy}/>
+          </React.Fragment>
       )
     } else if (isBlog(key)) {
-      return  <li key={key}  className={style.Blog}>{key.replace(BLOG_HIERARCHY_KEY.Blog, '')}</li>
+      return  <Link href={`/Blog/${value.id}`}><a><li key={key} className={style.Blog}>{(value as BlogModel).title}</li></a></Link>
     }
     return null
   }
   return (
-    <>
-      {
-        map(hierarchy, (value, key) => (
-          renderChild(key, value)
-        ))
-      }
-    </>
+    <ul {...rest} className={classNames(style.Folder, className)}>
+      <li className={classNames(style.FolderItem, { [style.FolderItemClose]: !open })} onClick={() => setOpen(!open)}>{rootTitle}</li>
+      <ul className={classNames(style.FolderContent, { [style.FolderClose]: !open })}>
+        {
+          map(hierarchy, (value, key) => (
+            renderChild(key, value)
+          ))
+        }
+      </ul>
+    </ul>
   )
 }
 
 const BlogCategory = ({
-  blogs
+  blogs,
+  className = ''
 }: IBlogCategoryProps) => {
   const { hierarchy } = useBlogCategoryHierarchy({ blogs })
   return (
-    <div>
-      <HierarchyView hierarchy={hierarchy}/>
+    <div className={classNames(style.Root, className)}>
+      <HierarchyView hierarchy={hierarchy} rootTitle='Category'/>
     </div>
   )
 }

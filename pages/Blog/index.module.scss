@@ -1,11 +1,11 @@
 .Root {
+  @apply flex;
+}
+
+.BlogCategory {
+  // @apply ;
+}
+
+.BlogList {
   @apply max-w-3xl m-auto;
-}
-
-.ArticlaContainer {
-  @apply flex flex-col gap-2 p-5;
-}
-
-.Artical {
-  @apply flex justify-between border-b border-gray-500;
 }
