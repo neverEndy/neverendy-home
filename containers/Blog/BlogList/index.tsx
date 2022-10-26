@@ -10,6 +10,7 @@ const BlogList = ({
   values,
   onDelete = () => null
 }: IBlogListProps) => {
+  
   return (
     <div className={style.Root}>
       {

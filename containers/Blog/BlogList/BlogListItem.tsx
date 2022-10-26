@@ -42,12 +42,12 @@ const BlogListItem = ({
       footer={
         <>
           <span>作者: {blog.author}</span>
-          <span>created time: {new Date(blog.createdDate).toLocaleString()}</span>
-          <span>edited time: {new Date(blog.editDate).toLocaleString()}</span>
+          <span>created: {new Date(blog.createdDate).toLocaleString()}</span>
+          <span>edited: {new Date(blog.editDate).toLocaleString()}</span>
         </>
       }>
         <span>ID: {Array.from(id).slice(0, 8).join('')}</span>
-        <span>子標: {blog.subtitle}</span>
+        <span>Subtitle: {blog.subtitle}</span>
     </InfoRow>
   )
 }

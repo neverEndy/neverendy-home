@@ -12,6 +12,11 @@ export const getBlogById = async (id: string) => {
   return blog
 }
 
+export const getCategories = async () => {
+  const blogs = await getAllBlogs()
+  return Array.from(new Set(blogs.map(blog => blog.category)))
+}
+
 export type CreateBlogOption = Omit<BlogModel, 'id' | 'createdDate' | 'editDate'> & Omit<ArticleModel, 'id'>
 
 export const createBlog = async (obj: CreateBlogOption) => {
@@ -22,6 +27,7 @@ export const createBlog = async (obj: CreateBlogOption) => {
     subtitle: obj.subtitle,
     author: obj.author,
     tags: obj.tags,
+    category: obj.category,
     createdDate: Date.now(),
     editDate: Date.now(),
   }

@@ -1,0 +1,15 @@
+.Root {
+  @apply ml-3;
+}
+
+.Folder {
+  @apply ml-5 mb-2;
+}
+
+.FolderItem {
+  @apply -ml-5 text-xl;
+}
+
+.Blog {
+  @apply text-gray-400 text-sm;
+}

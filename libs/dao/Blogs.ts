@@ -10,6 +10,7 @@ export type BlogModel = {
   tags: string
   createdDate: number
   editDate: number
+  category: string
 }
 
 class Blogs implements DAOBehavior<BlogModel> {

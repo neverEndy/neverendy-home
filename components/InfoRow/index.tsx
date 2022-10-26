@@ -22,8 +22,8 @@ const InfoRow = ({
       <div className={style.Header}>
         {
           href
-            ? <Link href={href}><a className={style.HeaderTitle}>{title}</a></Link>
-            : <a className={style.HeaderTitle}>{title}</a>
+            ? <Link href={href}><a className={style.HeaderTitle}><h3>{title}</h3></a></Link>
+            : <h3 className={style.HeaderTitle}>{title}</h3>
         }
         <span className={style.HeaderActions}>{ actions }</span>
       </div>
