@@ -1,5 +1,5 @@
 .Root {
-  @apply ml-3;
+  @apply m-5 max-w-[250px];
 }
 
 .Folder {
@@ -16,21 +16,11 @@
 
 .FolderItem {
   @apply text-xl cursor-pointer flex items-center;
-  @mixin decorator {
-    @apply text-sm mr-2;
-  }
-  &.FolderItemClose {
-    &::before {
-      @include decorator;
-      content: '>'
-    }
-  }
-  &::before {
-    @include decorator;
-    content: '⋁'
-  }
 }
 
 .Blog {
-  @apply text-gray-400 text-sm;
+  @apply text-gray-400 text-sm ml-4 my-1 list-disc;
+  &:hover {
+    @apply underline;
+  }
 }

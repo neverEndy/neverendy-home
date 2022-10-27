@@ -13,7 +13,7 @@ export type BlogModel = {
   category: string
 }
 
-class Blogs implements DAOBehavior<BlogModel> {
+class Blogs implements DAOBehavior<BlogModel & { article: ArticleModel }> {
   private async getMap () {
     const buffer = await fs.readFile('public/blog/map.json')
     const result = JSON.parse(buffer.toString()) as { [k: string]: BlogModel }
@@ -46,7 +46,19 @@ class Blogs implements DAOBehavior<BlogModel> {
     delete map[id]
     await fs.writeFile(`public/blog/map.json`, JSON.stringify(map))
   }
-  async update () {}
+  async update (id: string, model: Partial<Omit<BlogModel, 'id'>>, article?: Omit<ArticleModel, 'id'>) {
+    const oldBlog = await this.getById(id)
+    const oldBlogMap = await this.getMap()
+    const newBlog = { ...oldBlog, ...model }
+    const text = JSON.stringify({ ...oldBlogMap, [id]: newBlog })
+    await fs.writeFile(`public/blog/map.json`, text)
+    article && await Articles.update(id, article)
+    const newArticle = await Articles.getById(id)
+    return {
+      ...newBlog,
+      article: newArticle
+    }
+  }
 }
 
 export default new Blogs()

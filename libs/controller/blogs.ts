@@ -44,3 +44,19 @@ export const deleteBlog = async (id: string) => {
   await Articles.delete(id)
   return { id }
 }
+
+export const updateBlog = async (id: string, obj: CreateBlogOption) => {
+  const newBlog = {
+    title: obj.title,
+    subtitle: obj.subtitle,
+    author: obj.author,
+    tags: obj.tags,
+    category: obj.category,
+    editDate: Date.now(),
+  }
+  const newArticle = {
+    content: obj.content
+  }
+  const blog = await Blogs.update(id, newBlog, newArticle)
+  return blog
+}

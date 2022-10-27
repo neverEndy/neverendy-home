@@ -6,7 +6,8 @@ export type MethodHandler = {
   get?: RequestHandler,
   post?: RequestHandler,
   delete?: RequestHandler,
-  put?: RequestHandler
+  put?: RequestHandler,
+  patch?: RequestHandler
 }
 
 export const requestMethodHandler = (handler: MethodHandler) => {
@@ -30,6 +31,11 @@ export const requestMethodHandler = (handler: MethodHandler) => {
       case 'PUT':
         if (handler.put) {
           handler.put(req, res)
+          break
+        }
+      case 'PATCH':
+        if (handler.patch) {
+          handler.patch(req, res)
           break
         }
       default:

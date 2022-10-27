@@ -18,7 +18,7 @@ const CreateOrEdit = () => {
     } else if (isAllowEdit && !!blog) {
       setLoading(false)
     }
-  }, [isAllowCreate, isAllowEdit])
+  }, [isAllowCreate, isAllowEdit, blog])
 
   if (loading) {
     return <span>loading...</span>
@@ -26,7 +26,7 @@ const CreateOrEdit = () => {
   return (
     <main>
       { isAllowCreate && <BlogCreator /> }
-      { isAllowEdit &&<BlogEditor /> }
+      { isAllowEdit && blog && <BlogEditor blog={blog}/> }
     </main>
   )
 }

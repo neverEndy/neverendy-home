@@ -30,7 +30,9 @@ class Articles implements DAOBehavior<ArticleModel>{
     await fs.unlink(`public/blog/markdowns/${id}.md`)
   }
 
-  async update () {}
+  async update (id: string, model: Omit<ArticleModel, 'id'>) {
+    await fs.writeFile(`public/blog/markdowns/${id}.md`, model.content)
+  }
 }
 
 export default new Articles()

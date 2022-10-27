@@ -1,7 +1,15 @@
 .Root {
-  @apply p-5 max-w-3xl m-auto;
+  @apply p-5 flex;
 }
 
 .Actions {
-  @apply py-3
+  @apply py-3;
+}
+
+.MainView {
+  @apply flex flex-col mx-auto ;
+}
+
+.BlogList {
+  @apply max-w-3xl;
 }

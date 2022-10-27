@@ -7,9 +7,11 @@ import style from './index.module.scss'
 import Button from '../../../components/Button'
 import { BlogModel } from '../../../libs/dao/Blogs'
 import BlogList from '../../../containers/Blog/BlogList'
+import BlogCategory from '../../../containers/Blog/BlogCategory'
 
 const MyBlog = () => {
   const [blogDict, setBlogDict] = useState<{ [k: string]: BlogModel }>({ ...blogMap })
+  const blogs = Object.values(blogDict)
   const handleDelete = async (id: string) => {
     const fetchOptions: RequestInit = {
       method: 'DELETE'
@@ -22,12 +24,15 @@ const MyBlog = () => {
   }
   return (
     <div className={style.Root}>
-      <div className={style.Actions}>
+      <BlogCategory blogs={blogs}/>
+      <div className={style.MainView}>
+        <div className={style.Actions}>
         <Link href='/Admin/MyBlog/CreateOrEdit?type=create'>
           <a><Button>Create Article</Button></a>
         </Link>
       </div>
-      <BlogList values={Object.values(blogDict)} onDelete={id => handleDelete(id)}/>
+        <BlogList className={style.BlogList} values={blogs} onDelete={id => handleDelete(id)}/>
+      </div>
     </div>
   )
 }
