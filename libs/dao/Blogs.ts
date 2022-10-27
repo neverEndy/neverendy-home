@@ -11,6 +11,7 @@ export type BlogModel = {
   createdDate: number
   editDate: number
   category: string
+  description?: string
 }
 
 class Blogs implements DAOBehavior<BlogModel & { article: ArticleModel }> {

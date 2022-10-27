@@ -6,25 +6,25 @@ import { map } from 'lodash'
 import { getBlogById } from '../../../libs/controller/blogs'
 import { BlogModel } from '../../../libs/dao/Blogs'
 import { ArticleModel } from '../../../libs/dao/Articles'
+import SEOHead, { DEFAULT_SEO_HEAD } from '../../../layout/Head'
 
 const markdown = require('markdown').markdown
 
 type IPost = BlogModel & ArticleModel
 
 const Post = ({
-  id,
   title,
-  subtitle,
   content,
-  author
+  tags,
+  description
 }: IPost) => {
   return (
     <main>
+      <SEOHead 
+        title={`${DEFAULT_SEO_HEAD.Title}-${title}`}
+        keywords={`${tags},${DEFAULT_SEO_HEAD.Keywords}`}
+        description={description || DEFAULT_SEO_HEAD.Description}/>
       <article className="markdown-body">
-        <div>
-          <h1>{title}</h1>
-          <h5>{subtitle}</h5>
-        </div>
         <section dangerouslySetInnerHTML={{ __html: content }}></section>
       </article>
     </main>
