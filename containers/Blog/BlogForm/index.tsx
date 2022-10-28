@@ -2,21 +2,23 @@ import React, { useState } from 'react'
 import TextField from '../../../components/TextField'
 import useBlogCategories from '../../../hooks/api/useBlogCategories'
 import { CreateBlogOption } from '../../../libs/controller/blogs'
-import RichTextEditor from '../RichText/Editor'
+import RichTextEditor, { IRichTextEditorProps } from '../RichText/Editor'
 import style from './index.module.scss'
 
 export interface IBlogFormProps {
   defaultBlog?: CreateBlogOption
   action: 'create' | 'save'
   onSubmit: (blog: CreateBlogOption) => void
+  onUploadImage: IRichTextEditorProps['onUploadImage']
 }
 
 const BlogForm = ({
   defaultBlog,
   action,
-  onSubmit
+  onSubmit,
+  onUploadImage
 }: IBlogFormProps) => {
-  const [markdown, setMarkdown] = useState(defaultBlog?.content || '')
+  const [markdown, setMarkdown] = useState(defaultBlog?.article.content || '')
   const [title, setTitle] = useState(defaultBlog?.title || '')
   const [subtitle, setSubtitle] = useState(defaultBlog?.subtitle || '')
   const [author, setAuthor] = useState(defaultBlog?.author || '')
@@ -30,7 +32,9 @@ const BlogForm = ({
       subtitle,
       author,
       tags: tags.toString(),
-      content: markdown,
+      article: {
+        content: markdown
+      },
       category
     }
     onSubmit(options)
@@ -50,7 +54,7 @@ const BlogForm = ({
             ))
           }
         </datalist>
-        <RichTextEditor value={markdown} onChange={e => setMarkdown(e)} />
+        <RichTextEditor value={markdown} onChange={e => setMarkdown(e)} onUploadImage={onUploadImage}/>
         <button type='button' onClick={() => handleCreate()}>{action}</button>
       </form>
     </div>

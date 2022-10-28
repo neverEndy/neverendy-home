@@ -46,7 +46,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
   }
   const respJson = await getBlogById(String(id))
-  
   return {
     props: {
       ...respJson,

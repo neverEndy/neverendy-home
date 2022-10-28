@@ -10,7 +10,7 @@ export default requestMethodHandler({
       subtitle: body.subtitle,
       author: body.author,
       tags: body.tags,
-      content: body.content,
+      article: body.article,
       category: body.category
     }
     const newBlog = await createBlog(options)

@@ -1,6 +1,6 @@
 import { uuid } from "../utils"
 import Blogs, { BlogModel } from "../dao/Blogs"
-import Articles, { ArticleModel } from "../dao/Articles"
+import { ArticleModel } from "../dao/Articles"
 
 export const getAllBlogs = async () => {
   const blogs = await Blogs.getAll()
@@ -17,7 +17,7 @@ export const getCategories = async () => {
   return Array.from(new Set(blogs.map(blog => blog.category)))
 }
 
-export type CreateBlogOption = Omit<BlogModel, 'id' | 'createdDate' | 'editDate'> & Omit<ArticleModel, 'id'>
+export type CreateBlogOption = Omit<BlogModel, 'id' | 'createdDate' | 'editDate' | 'article'> & { article: Omit<ArticleModel, 'id'> }
 
 export const createBlog = async (obj: CreateBlogOption) => {
   const id = uuid()
@@ -28,20 +28,16 @@ export const createBlog = async (obj: CreateBlogOption) => {
     author: obj.author,
     tags: obj.tags,
     category: obj.category,
+    article: { ...obj.article, id },
     createdDate: Date.now(),
     editDate: Date.now(),
   }
-  const newArticle: ArticleModel = {
-    id,
-    content: obj.content
-  }
-  Blogs.create(newBlog, newArticle)
+  Blogs.create(newBlog)
   return newBlog
 }
 
 export const deleteBlog = async (id: string) => {
   await Blogs.delete(id)
-  await Articles.delete(id)
   return { id }
 }
 
@@ -52,11 +48,9 @@ export const updateBlog = async (id: string, obj: CreateBlogOption) => {
     author: obj.author,
     tags: obj.tags,
     category: obj.category,
-    editDate: Date.now(),
+    article: { ...obj.article, id },
+    editDate: Date.now()
   }
-  const newArticle = {
-    content: obj.content
-  }
-  const blog = await Blogs.update(id, newBlog, newArticle)
+  const blog = await Blogs.update(id, newBlog)
   return blog
 }

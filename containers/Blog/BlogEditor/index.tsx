@@ -14,7 +14,7 @@ const BlogEditor = ({
   const router = useRouter()
   const defaultBlog: IBlogFormProps['defaultBlog'] = {
     ...blog,
-    content: blog.article.content
+    article: blog.article
   }
 
   const handleUpdateBlog = async (updatedBlog: CreateBlogOption) => {
@@ -29,10 +29,24 @@ const BlogEditor = ({
       alert('failed to update blog')
     }
   }
+
+  const handleImageUpload = async (base64: string) => {
+    const fetchOptions: RequestInit = {
+      method: 'POST',
+      body: JSON.stringify({ base64 })
+    }
+    try {
+      const resp = await fetch('http://localhost:3000/neverendy-home/api/images/', fetchOptions)
+      const { fileName } = await resp.json()
+      return fileName
+    } catch (err) {
+      alert('failed to upload image')
+    }
+  }
   return (
     <div>
       <span>editor</span>
-      <BlogForm action='save' defaultBlog={defaultBlog} onSubmit={handleUpdateBlog}/>
+      <BlogForm action='save' defaultBlog={defaultBlog} onSubmit={handleUpdateBlog} onUploadImage={handleImageUpload}/>
     </div>
   )
 }

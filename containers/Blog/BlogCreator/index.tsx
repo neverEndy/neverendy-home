@@ -19,10 +19,24 @@ const BlogCreator = () => {
       alert('failed to create blog')
     }
   }
+
+  const handleImageUpload = async (base64: string) => {
+    const fetchOptions: RequestInit = {
+      method: 'POST',
+      body: JSON.stringify({ base64 })
+    }
+    try {
+      const resp = await fetch('http://localhost:3000/neverendy-home/api/images/', fetchOptions)
+      const { fileName } = await resp.json()
+      return fileName
+    } catch (err) {
+      alert('failed to upload image')
+    }
+  }
   return (
     <div className={style.Root}>
       <span>BlogCreator</span>
-      <BlogForm action='create' onSubmit={handleCreateBlog}/>
+      <BlogForm action='create' onSubmit={handleCreateBlog} onUploadImage={handleImageUpload}/>
     </div>
   )
 }

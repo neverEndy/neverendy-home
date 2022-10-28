@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { deleteBlog, getBlogById, updateBlog } from '../../../libs/controller/blogs'
-import { requestMethodHandler } from '../../../libs/controller/utils'
-import Blogs from '../../../libs/dao/Blogs'
+import { CreateBlogOption, deleteBlog, getBlogById, updateBlog } from '../../../../libs/controller/blogs'
+import { requestMethodHandler } from '../../../../libs/controller/utils'
+import Blogs from '../../../../libs/dao/Blogs'
 
 export type APIGetBlogByIdResponse = Awaited<ReturnType<typeof Blogs['getById']>>
 
@@ -19,12 +19,12 @@ export default requestMethodHandler({
   async patch (req, res) {
     const id = String(req.query.id)
     const body = JSON.parse(req.body)
-    const options = {
+    const options: CreateBlogOption = {
       title: body.title,
       subtitle: body.subtitle,
       author: body.author,
       tags: body.tags,
-      content: body.content,
+      article: body.article,
       category: body.category
     }
     const blog = await updateBlog(id, options)
