@@ -12,11 +12,15 @@ interface IBlog {
 
 const Blog = ({ blogDict }: IBlog) => {
   const blogs = useMemo(() => Object.values(blogDict).map(blog => ({ ...blog, disabledActions: true })), [blogDict])
+  const newestBlogs = blogs.sort((a, b) => a.editDate < b.editDate ? -1 : 1).slice(0, 10)
 
   return (
     <main className={style.Root}>
       <BlogCategory className={style.BlogCategory} blogs={blogs}/>
-      <BlogList className={style.BlogList} values={blogs}/>
+      <div className={style.MainView}>
+        <h2 className={style.Title}>最近10篇文章</h2>
+        <BlogList className={style.BlogList} values={newestBlogs}/>
+      </div>
     </main>
   )
 }

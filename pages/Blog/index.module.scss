@@ -6,6 +6,14 @@
   // @apply ;
 }
 
+.MainView {
+  @apply max-w-3xl mx-auto my-10;
+}
+
+.Title {
+  @apply text-2xl font-bold my-5;
+}
+
 .BlogList {
-  @apply max-w-3xl mx-auto;
+  // @apply max-w-3xl mx-auto;
 }
