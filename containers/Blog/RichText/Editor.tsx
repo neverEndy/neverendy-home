@@ -47,21 +47,22 @@ const RichTextEditor = ({
   onUploadImage
 }: IRichTextEditorProps) => {
 
-  const handlePasteImage = async (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
-    const boardData = e.clipboardData
-    const file = boardData.files[0]
+  const handlePasteImage = async (file: File, cursorPosition: number) => {
     if (!file) return
     
     const b64 = await toBase64(file)
     const { width, height } = await getBase64ImgSize(b64)
     const originalRatio = height / width
-    const maxWidth = 450
+    const maxWidth = 900
     const maxHeight = maxWidth * originalRatio
 
     const base64 = width > maxWidth ? await resizeBase64Img(b64, maxWidth, maxHeight) : b64
     const fileName = await onUploadImage(base64)
 
-    onChange(value + `![image](/neverendy-home/blog/images/${fileName})`)
+    const textBefore = value.slice(0, cursorPosition)
+    const textAfter = value.slice(cursorPosition, value.length)
+    const finalText = textBefore + `![image](/neverendy-home/blog/images/${fileName})` + textAfter
+    onChange(finalText)
   }
   return (
     <div className={style.Root}>
@@ -70,7 +71,8 @@ const RichTextEditor = ({
         className={style.MarkdownInput}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        onPaste={handlePasteImage}/>
+        onPaste={e => handlePasteImage(e.clipboardData.files[0], (e.target as any).selectionStart)}
+        onDrop={e => handlePasteImage(e.dataTransfer.files[0], (e.target as any).selectionStart)}/>
       <RichTextViewer value={value}/>
     </div>
   )

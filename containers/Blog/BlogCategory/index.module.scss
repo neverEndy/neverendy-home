@@ -18,6 +18,10 @@
   @apply text-xl cursor-pointer flex items-center;
 }
 
+.FolderIcon {
+  @apply mr-2;
+}
+
 .Blog {
   @apply text-gray-400 text-sm ml-4 my-1 list-disc;
   &:hover {

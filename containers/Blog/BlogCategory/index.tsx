@@ -5,9 +5,9 @@ import React from 'react'
 import { useState } from 'react'
 import useBlogCategoryHierarchy, { BlogHierarchy, BLOG_HIERARCHY_KEY } from '../../../hooks/useBlogCategoryHierarchy'
 import { BlogModel } from '../../../libs/dao/Blogs'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-// import Icon from '@mui/icons-material';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import FolderIcon from '@mui/icons-material/Folder'
 import style from './index.module.scss'
 
 export interface IBlogCategoryProps {
@@ -41,14 +41,19 @@ const HierarchyView = ({
           hierarchy={value as BlogHierarchy}/>
       )
     } else if (isBlog(key)) {
-      return  <Link key={key} href={`/Blog/${value.id}`}><a><li key={key} className={style.Blog}>{(value as BlogModel).title}</li></a></Link>
+      return  (
+        <Link key={key} href={`/Blog/${value.id}`}>
+          <a><li key={key} className={style.Blog}>{(value as BlogModel).title}</li></a>
+        </Link>
+      )
     }
     return null
   }
   return (
     <ul {...rest} className={classNames(style.Folder, className)}>
       <li className={style.FolderItem} onClick={() => setOpen(!open)}>
-        { open ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon /> }
+        { open ? <KeyboardArrowDownIcon fontSize='small'/> : <KeyboardArrowRightIcon fontSize='small'/> }
+        <FolderIcon className={style.FolderIcon} fontSize='small'/>
         {rootTitle}
       </li>
       <ul className={classNames(style.FolderContent, { [style.FolderClose]: !open })}>
